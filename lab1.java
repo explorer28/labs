@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class Main
+public class lab1
 {
 	public static void main(String[] args) {
 		System.out.println("Hello World");
@@ -10,29 +10,23 @@ public class Main
 		int num2 = scan.nextInt();
 		System.out.print("Enter 3rd number: \n");
 		int num3 = scan.nextInt();
-		
-		boolean res13 = false, res19 = false, res23 = false, res29 = false,
-res33 = false, res39 = false;
-		if(num1 % 9 == 0) res19 = true;
-		else if(num1 % 3 == 0) res13 = true;
-		
-		if(num2 % 9 == 0) res29 = true;
-		else if(num2 % 3 == 0) res23 = true;
-		
-		if(num3 % 9 == 0) res39 = true;
-		else if(num3 % 3 == 0) res33 = true;
-		
-		System.out.println("\nResult:\n");
-		if(res19) System.out.println(num1 + " divides by 3 and 9");
-		else if(res13) System.out.println(num1 + " divides by 3");
-		else System.out.println(num1 + " doesn't divides by 3 nor 9");
-		
-		if(res29) System.out.println(num2 + " divides by 3 and 9");
-		else if(res23) System.out.println(num2 + " divides by 3");
-		else System.out.println(num2 + " doesn't divides by 3 nor 9");
-		
-		if(res39) System.out.println(num3 + " divides by 3 and 9");
-		else if(res33) System.out.println(num3 + " divides by 3");
-		else System.out.println(num3 + " doesn't divides by 3 nor 9");
+		System.out.println(num1 + dividsStatus(num1));
+		System.out.println(num2 + dividsStatus(num2));
+		System.out.println(num3 + dividsStatus(num3));
+	}
+	public static String dividsStatus(int number){
+		byte status = 0;
+		if(number%3==0)status++;
+		if(number%9==0)status++;
+		switch (status) {
+			case 0:
+				return " doesn't divides by 3 or 9";
+			case 1:
+				return " divides by 3";
+			case 2:
+				return " divides by 3 and 9";
+			default:
+				return " nothing";
+		}
 	}
 }
