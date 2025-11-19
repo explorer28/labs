@@ -1,14 +1,13 @@
 //music: name, copies sold, download (yes / no)
 //count all sold, can download
 import java.util.*;
-import java.util.regex.*;
 
 public class lab4{
 	public static void main(String[] args){
 		Music music_array [] = new Music[10];
 
 		for(int index = 0; index < music_array.length; index++){
-            music_array[index] = new Music(index+1, "Track N" + index, 15000, false); //!!!
+            music_array[index] = new Music(index+1, "Music N" + index+1, 15000, false); //!!!
             music_array[index].printRecord();
         }
 
