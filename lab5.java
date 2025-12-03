@@ -12,7 +12,7 @@ public class Lab5{
         String output = "output.txt";
         CReader reader = new CReader(input);
         CWriter writer = new CWriter(output);
-        CParser parser = new CParser("^d+\\|\\d+\\|\\[A-Za-z]+\\|\\d+$");
+        CParser parser = new CParser("^d+\\|\\w+\\|\\w+\\|\\d+$");
         ArrayList<String> strings = reader.readLines();
         ArrayList<Computer> computers = parser.parseComputers(strings);
         computers.stream().forEach(string -> System.out.println(string));
@@ -25,13 +25,13 @@ public class Lab5{
 
 public class Computer{
     private int frequency;
-    private int RAM;
+    private String RAM;
     private String GPU;
     private int power;
     
-    public Computer(int frequency, int RAM, String GPU, int power){
+    public Computer(int frequency, String RAM, String GPU, int power){
         this.frequency = frequency > 0 ? frequency : -1;
-        this.RAM = RAM > 0 ? RAM : -1;
+        this.RAM = RAM != null ? RAM : "Null";
         this.GPU = GPU != null ? GPU : "Null";
         this.power = power > 0 ? power : -1;
     }
@@ -43,10 +43,10 @@ public class Computer{
         this.frequency = frequency;
     }
 
-    public int getRAM() {
+    public String getRAM() {
         return RAM;
     }
-    public void setRAM(int RAM) {
+    public void setRAM(String RAM) {
         this.RAM = RAM;
     }
 
@@ -69,7 +69,7 @@ public class Computer{
         final int prime = 31;
         int result = 1;
         result = prime * result + frequency;
-        result = prime * result + RAM;
+        result = prime * result + ((RAM == null) ? 0 : RAM.hashcode());
         result = prime * result + ((GPU == null) ? 0 : GPU.hashCode());
         result = prime * result + power;
         return result;
@@ -145,7 +145,7 @@ public class CParser{
         strings.removeIf(string -> !pattern.matcher(string).matches());
         for(String line : strings){
             String[] params = line.split("\\|");
-            computers.add(new Computer(Integer.parseInt(params[0]), Integer.parseInt(params[1]), params[2], Integer.parseInt(params[3])));
+            computers.add(new Computer(Integer.parseInt(params[0]), params[1], params[2], Integer.parseInt(params[3])));
         }
     return computers;
     }
@@ -161,7 +161,7 @@ public enum CComparator implements Comparator<Computer> {
     BY_RAM{
         @Override
         public int compare(Computer comp1, Computer comp2){
-            return Integer.compare(comp1.getRAM(), comp2.getRAM());
+            return comp1.getRAM().compareTo(comp2.getRAM());
         }
     },
     BY_GPU{
@@ -176,4 +176,5 @@ public enum CComparator implements Comparator<Computer> {
             return Integer.compare(comp1.getPower(), comp2.getPower());
         }
     }
+
 }
